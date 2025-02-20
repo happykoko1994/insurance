@@ -39,7 +39,7 @@ export default function RootLayout({ children }) {
             <div className="flex items-center justify-end space-x-3">
               <FaWhatsapp className="text-green-600 w-4 h-4" />
               <p className="text-black hover:text-gray-700">
-                +7 (953) 351-08-50
+                +7(921) 432-95-42
               </p>
             </div>
           </div>

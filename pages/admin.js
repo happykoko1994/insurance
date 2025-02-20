@@ -82,11 +82,11 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 p-8 flex flex-col items-center">
-      <h1 className="text-3xl font-semibold text-gray-800">Заказы</h1>
+      <h1 className="text-3xl font-semibold text-gray-800">Заявки</h1>
 
       <div className="max-w-3xl w-full bg-white p-6 mt-6 rounded-xl shadow-lg">
         <div className="flex justify-end items-center mb-4 space-x-3">
-          <span className="text-lg">Заказов на странице:</span>
+          <span className="text-lg">Заявок на странице:</span>
           <select
             className="border p-2 rounded-md"
             value={ordersPerPage}
