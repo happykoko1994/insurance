@@ -19,12 +19,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
-  title: "Форма подачи данных для страхового полиса",
-  description:
-    "Заполните форму, чтобы передать необходимые данные страхователю для оформления страхового полиса.",
-};
-
 export default function RootLayout({ children }) {
   const jsonLd = {
     "@context": "https://schema.org",
