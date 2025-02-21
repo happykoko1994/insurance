@@ -62,7 +62,6 @@ export default function InsuranceForm() {
     }
   };
 
-  console.log("Ошибки валидации:", errors);
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-container">
       <h1 className="form-title">Заявка на оформление страхового полиса</h1>
@@ -94,7 +93,7 @@ export default function InsuranceForm() {
         <select
           {...register("insurancePeriod")}
           defaultValue=""
-          className="input-field"
+          className="input-field custom-select"
         >
           <option value="" disabled>
             Выберите срок страхования

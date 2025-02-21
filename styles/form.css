@@ -63,6 +63,20 @@ label {
   margin: 10px 0;
 }
 
+.custom-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20"><path fill="%23000000" d="M7 10l5 5 5-5z"/></svg>') 
+              no-repeat right center;
+  background-size: 20px; /* Увеличиваем размер стрелки */
+  background-position: calc(100% - 10px) center;
+
+  padding-right: 35px; /* Увеличиваем отступ под стрелку */
+}
+
+
 .file-label {
   padding: 10px 15px;
   background: #007bff;
