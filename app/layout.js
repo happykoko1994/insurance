@@ -39,7 +39,7 @@ export default function RootLayout({ children }) {
     },
     "telephone": "+7 (921) 432-95-42",
     "openingHours": "Mo-Fr 10:00-19:00, Sa-Su 10:00-18:00",
-    "url": "https://вашсайт.рф"
+    "url": "https://insurance-basova.vercel.app/"
   };
   return (
     <html lang="ru">
