@@ -49,14 +49,14 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
-        <header className="w-full bg-gray-100 border-b border-gray-300 py-4 px-6 justify-end items-center fixed hidden md:flex z-10">
+        <header className="w-full bg-[rgb(86,0,82)] border-b border-gray-300 py-4 px-6 justify-end items-center fixed hidden md:flex z-10">
           <div className="flex flex-col">
-            <p className="text-gray-700 text-sm mb-1">
+            <p className="text-white text-sm mb-1">
               Если у вас возникли вопросы, свяжитесь с нами:
             </p>
-            <div className="flex items-center justify-end space-x-3">
+            <div className="flex items-center justify-end space-x-2">
               <FaWhatsapp className="text-green-600 w-4 h-4" />
-              <p className="text-black hover:text-gray-700">
+              <p className="text-white">
                 +7(921) 432-95-42
               </p>
             </div>

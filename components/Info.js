@@ -17,7 +17,7 @@ export default function StoreInfo() {
 
       <div className="store-info__section">
         <p className="store-info__text left">
-          Опытный специалист с более чем <b>15-летним стажем</b> поможет вам оформить
+          Опытный специалист с более чем <b className="text-[rgb(160,160,60)]">15 летним стажем</b> поможет вам оформить
           надежную страховку для вашего авто.
         </p>
       </div>
@@ -74,7 +74,7 @@ export default function StoreInfo() {
             href={mapLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="mb-4 inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out"
+            className="mb-4 inline-block bg-[rgb(115,0,109)] hover:bg-[rgb(140,0,133)] text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out"
           >
             Построить маршрут
           </a>
