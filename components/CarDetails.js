@@ -9,7 +9,7 @@ export default function CarDetails({ register, errors }) {
       <TextInput label="Год выпуска" name="car.year" register={register} type="number" error={errors?.car?.year} placeholder="Введите год, например, 2020" />
       <TextInput label="Мощность (л.с.)" name="car.power" register={register} type="number" error={errors?.car?.power} placeholder="Введите мощность, например, 150" />
       <TextInput 
-        label="VIN-номер" 
+        label="VIN-номер или Frame" 
         name="car.vin" 
         register={register} 
         error={errors?.car?.vin} 
