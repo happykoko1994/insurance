@@ -149,8 +149,8 @@ async function sendEmailNotification(data) {
       subject: "Новый заказ на страховой полис",
       text: `Регион: ${data.region}
       Телефон: ${data.phone}
-Страховой период: ${data.insurancePeriod}
-Водители: ${data.drivers
+      Страховой период: ${data.insurancePeriod}
+      Водители: ${data.drivers
         .map(
           (d) =>
             `\n- ${d.lastName} ${d.firstName} ${d.middleName || ""}, ВУ: ${
@@ -163,15 +163,14 @@ async function sendEmailNotification(data) {
                 : "Не указано"
             }`
         )
-
         .join("")}
-Данные авто: 
-Марка: ${data.car?.brand || "Не указано"}, 
-Модель: ${data.car?.model || "Не указано"}, 
-Год: ${data.car?.year || "Не указано"}, 
-VIN: ${data.car?.vin || "Не указан"}
-
-Заказ можно посмотреть в админке: ${process.env.URL}/admin`,
+      Данные авто: 
+      Марка: ${data.car?.brand || "Не указано"}, 
+      Модель: ${data.car?.model || "Не указано"}, 
+      Год: ${data.car?.year || "Не указано"}, 
+      VIN: ${data.car?.vin || "Не указан"}
+      
+      Заказ можно посмотреть в админке: ${process.env.URL}/admin`,
     });
 
     console.log("✅ Email отправлен:", info.response);
