@@ -33,6 +33,14 @@ export default function OrderList({ orders, deleteOrder, deletingOrderId }) {
               </p>
             </div>
 
+            {/* 📌 Добавляем отображение телефона */}
+            <div className="text-lg text-gray-700">
+              <p className="font-semibold">Телефон для связи:</p>
+              <p className="text-blue-600 font-medium">
+                {order.phone || "Не указан"}
+              </p>
+            </div>
+
             <div className="grid grid-cols-2 text-lg text-gray-700">
               <p className="font-semibold col-span-2">Данные автомобиля:</p>
               <p>Марка: {order.car?.brand || "Не указана"}</p>

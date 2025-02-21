@@ -42,6 +42,7 @@ export default async function handler(req, res) {
     // Расшифровка данных перед отправкой в админку
     const decryptedOrders = orders.map(order => ({
       ...order.toObject(),
+      phone: decrypt(order.phone),
       drivers: order.drivers?.map(driver => ({
         ...driver,
         firstName: decrypt(driver.firstName),
@@ -57,8 +58,6 @@ export default async function handler(req, res) {
         vin: decrypt(order.car.vin)
       }
     }));
-
-    console.log("✅ Данные после расшифровки:", JSON.stringify(decryptedOrders, null, 2));
 
     res.status(200).json(decryptedOrders);
   } catch (error) {

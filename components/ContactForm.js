@@ -66,13 +66,25 @@ export default function InsuranceForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-container">
       <h1 className="form-title">Заявка на оформление страхового полиса</h1>
+      
       <TextInput
         label="Регион страхования"
         name="region"
         register={register}
         error={errors.region}
-        placeholder="Введите регион, например, Москва"
+        placeholder="Регион прописки, например, Москва"
       />
+
+      {/* Поле ввода телефона */}
+      <TextInput
+        label="Телефон для связи"
+        name="phone"
+        register={register}
+        error={errors.phone}
+        type="tel"
+        placeholder="Например, +79261234567"
+      />
+
       <DriverInput control={control} register={register} errors={errors} />
       <CarDetails register={register} errors={errors} />
 
@@ -97,9 +109,11 @@ export default function InsuranceForm() {
           <p className="error-message">{errors.insurancePeriod.message}</p>
         )}
       </div>
+
       <button type="submit" disabled={isSubmitting} className="submit-button">
         {isSubmitting ? <ClipLoader color="white" size={24} /> : "Отправить"}
       </button>
+      
       {success && <p className="success-message">{success}</p>}
       {error && <p className="error-message">{error}</p>}
     </form>

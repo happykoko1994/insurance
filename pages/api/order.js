@@ -10,7 +10,6 @@ dotenv.config();
 const MAX_RECORDS = 30; // Максимальное количество заказов в базе
 
 const SECRET_KEY = process.env.ENCRYPTION_KEY; // 32-байтовый ключ
-const ALGORITHM = "aes-256-cbc";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -30,21 +29,22 @@ export default async function handler(req, res) {
     try {
       const [ivHex, encryptedData] = encryptedText.split(":");
       const iv = Buffer.from(ivHex, "hex");
-  
-      const decipher = crypto.createDecipheriv("aes-256-cbc", Buffer.from(SECRET_KEY, "hex"), iv);
-      
+
+      const decipher = crypto.createDecipheriv(
+        "aes-256-cbc",
+        Buffer.from(SECRET_KEY, "hex"),
+        iv
+      );
+
       let decrypted = decipher.update(encryptedData, "hex", "utf8");
       decrypted += decipher.final("utf8");
-  
+
       return decrypted;
     } catch (error) {
       console.error("❌ Ошибка при расшифровке:", error);
       return null;
     }
   }
-  
- 
-  
 
   try {
     await connectDB();
@@ -59,6 +59,13 @@ export default async function handler(req, res) {
     // Приведение данных в нужный формат
     data.region = capitalize(data.region);
     data.insurancePeriod = capitalize(data.insurancePeriod);
+
+    if (data.phone) {
+      data.phone = encrypt(String(data.phone).trim());
+    } else {
+      data.phone = "";
+    }
+    
 
     if (data.drivers && Array.isArray(data.drivers)) {
       data.drivers = data.drivers.map((driver) => ({
@@ -77,7 +84,6 @@ export default async function handler(req, res) {
       data.car.vin = data.car.vin.toUpperCase();
     }
 
-    console.log("📌 Данные после форматирования:", data);
 
     // Проверяем количество заказов
     const count = await Order.countDocuments();
@@ -99,6 +105,7 @@ export default async function handler(req, res) {
     }));
 
     data.car.vin = encrypt(data.car.vin);
+    console.log("📌 Данные после форматирования:", data);
 
     // Сохраняем новый заказ
     const order = new Order(data);
@@ -111,6 +118,7 @@ export default async function handler(req, res) {
     console.log("📩 Отправка email началась...");
     const decryptedData = {
       ...data,
+      phone: decrypt(data.phone),
       drivers: data.drivers.map((driver) => ({
         ...driver,
         firstName: decrypt(driver.firstName) || driver.firstName,
@@ -122,8 +130,9 @@ export default async function handler(req, res) {
         vin: decrypt(data.car.vin) || data.car.vin,
       },
     };
-    
-    sendEmailNotification(decryptedData).catch(console.error);  } catch (error) {
+
+    sendEmailNotification(decryptedData).catch(console.error);
+  } catch (error) {
     console.error("❌ Ошибка при сохранении заказа:", error);
     res.status(400).json({ message: error.message });
   }
@@ -139,6 +148,7 @@ async function sendEmailNotification(data) {
       to: process.env.EMAIL_RECEIVER,
       subject: "Новый заказ на страховой полис",
       text: `Регион: ${data.region}
+      Телефон: ${data.phone}
 Страховой период: ${data.insurancePeriod}
 Водители: ${data.drivers
         .map(

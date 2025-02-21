@@ -44,7 +44,7 @@ export default function RootLayout({ children }) {
             </div>
           </div>
         </header>
-        <main className="flex-grow flex flex-col pt-20">{children}</main>
+        <main className="flex-grow flex flex-col">{children}</main>
       </body>
     </html>
   );

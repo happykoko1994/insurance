@@ -3,6 +3,11 @@ import * as z from "zod";
 export const schema = z.object({
   region: z.string().min(2, "Минимум 2 символа").max(50, "Максимум 50 символов"),
 
+  phone: z.string()
+    .min(10, "Минимум 10 символов")
+    .max(15, "Максимум 15 символов")
+    .regex(/^[+]?\d+$/, "Допустимы только цифры и + в начале"),
+
   drivers: z.array(
     z.object({
       lastName: z.string()

@@ -1,0 +1,187 @@
+.store-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 60px 0 10px;
+  height: 100%;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.store-info__title {
+  font-size: clamp(24px, 5vw, 42px);
+  font-weight: bold;
+  text-align: center; /* Центрируем заголовок */
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+.store-info__subtitle {
+  font-size: clamp(16px, 2.5vw, 20px);
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.store-info__text {
+  font-size: clamp(14px, 2vw, 18px);
+  line-height: 1.6;
+  margin: 10px 0;
+  text-align: center; /* Центрируем текст в блоке */
+}
+
+.store-info__advantages {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.store-info__advantages-list {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.store-info__advantages-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 200px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.store-info__icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+.store-info__advantage-text {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.store-info__contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: auto; /* Блок с контактами отодвигается вниз */
+}
+
+.store-info__contact-map {
+  display: flex;
+  width: 100%;
+}
+
+.store-info__contact-left,
+.store-info__contact-right {
+  width: 50%; /* Каждому блоку даём по 50% ширины */
+  padding: 20px;
+}
+
+.store-info__contact-left .store-info__text {
+  text-align: left; /* Контакты выровнены по левому краю */
+}
+
+.store-info__contact-item {
+  margin-bottom: 20px;
+  text-align: left; /* Здесь текст будет выровнен по левому краю */
+}
+
+.store-info__contact-item .workdays,
+.store-info__contact-item .weekends {
+  font-weight: bold;
+}
+
+.store-info__contact-item .worktime {
+  padding-left: 5px;
+}
+
+.store-info__contact-item .separator {
+  display: block;
+  margin: 10px 0; /* Отступ сверху и снизу для линии */
+}
+
+.store-info__contact-item .workdays {
+  color: #333; /* Цвет для будней */
+}
+
+.store-info__contact-item .weekends {
+  color: #e60026; /* Цвет для выходных */
+}
+
+.store-info__bold {
+  font-weight: bold;
+}
+
+.store-info__link {
+  color: #0073e6;
+  text-decoration: none;
+}
+
+.store-info__link:hover {
+  text-decoration: underline;
+}
+
+iframe {
+  border: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  /* Центрируем текст и делаем отступы */
+  .store-info {
+    width: 100%;
+    padding: 0px;
+    text-align: center;
+  }
+  .store-info__title{
+    margin-top: 0;
+  }
+  
+  .store-info__subtitle, .store-info__contact-left .store-info__text{
+    margin: 0;
+    text-align: center;
+  }
+  .store-info__contact-item .separator{
+    margin: 0;
+  }
+
+  .store-info__advantages-list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .store-info__advantages-item {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  /* Контакты и карта на мобильных устройствах идут в колонку */
+  .store-info__contact-map {
+    flex-direction: column;
+    margin-top: 10px;
+  }
+
+  .store-info__contact-left,
+  .store-info__contact-right {
+    width: 100%;
+    padding: 0;
+  }
+  .store-info__contact-item{
+    margin-bottom: 10px;
+  }
+
+  /* Форма обратной связи на мобильных устройствах не фиксируется */
+  .contact-form-container {
+    position: static;
+    margin-top: 20px;
+  }
+}
