@@ -59,6 +59,8 @@ export default function StoreInfo() {
               Для получения дополнительной информации звоните по телефону:
               <br />
               <span className="store-info__bold">+7 (921) 432-95-42</span>
+              <br />
+              <span className="store-info__bold">+7 (812) 244-28-73</span>
             </p>
           </div>
           <div className="store-info__contact-item">
