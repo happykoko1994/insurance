@@ -26,8 +26,32 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Ренессанс страхование Московская Славянка",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Московская Славянка, 17А, ТЦ, этаж 2, павильон 35",
+      "addressLocality": "Санкт-Петербург",
+      "postalCode": "196645",
+      "addressCountry": "RU"
+    },
+    "telephone": "+7 (921) 432-95-42",
+    "openingHours": "Mo-Fr 10:00-19:00, Sa-Su 10:00-18:00",
+    "url": "https://вашсайт.рф"
+  };
   return (
-    <html lang="en">
+    <html lang="ru">
+      <head>
+      <meta name="keywords" content="страхование Московская Славянка, ОСАГО Колпино, КАСКО Пушкин, страховой агент Санкт-Петербург, Ренессанс страхование, автостраховка онлайн, страховка оффлайн"/>
+      <meta name="description" content="Заполните форму, чтобы передать необходимые данные страхователю для оформления страхового полиса." />
+      <title>Страхование автомобилей в Московской Славянке</title>
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
