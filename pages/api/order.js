@@ -1,9 +1,9 @@
 import connectDB from "../../lib/db";
 import Order from "../../models/Order";
 import { schema } from "../../utils/validation";
-import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import crypto from "crypto";
+import transporter from "../../lib/mailer";
 
 dotenv.config();
 
@@ -132,19 +132,6 @@ export default async function handler(req, res) {
 // 📩 Функция отправки email
 async function sendEmailNotification(data) {
   try {
-    console.log("📩 Создание транспортера...");
-
-    const transporter = nodemailer.createTransport({
-      host: "smtp.mail.ru", // Используем SMTP Mail.ru
-      port: 465, // Порт для защищённого соединения
-      secure: true, // true для SSL
-      auth: {
-        user: process.env.EMAIL_USER, // Твой email на Mail.ru
-        pass: process.env.EMAIL_PASS, // Сгенерированный пароль для SMTP
-      },
-    });
-    
-
     console.log("📩 Отправка email...");
 
     const info = await transporter.sendMail({

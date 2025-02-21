@@ -65,7 +65,7 @@ export default function InsuranceForm() {
   console.log("Ошибки валидации:", errors);
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-container">
-      <h1 className="form-title">Оформление страхового полиса</h1>
+      <h1 className="form-title">Заявка на оформление страхового полиса</h1>
       <TextInput
         label="Регион страхования"
         name="region"
