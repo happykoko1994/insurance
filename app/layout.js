@@ -24,6 +24,7 @@ export default function RootLayout({ children }) {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Ренессанс страхование Московская Славянка",
+    "image": "https://insurance-basova.vercel.app/favicon.ico",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Московская Славянка, 17А, ТЦ, этаж 2, павильон 35",
@@ -40,6 +41,11 @@ export default function RootLayout({ children }) {
       <head>
       <meta name="keywords" content="страхование Московская Славянка, ОСАГО Колпино, КАСКО Пушкин, страховой агент Санкт-Петербург, Ренессанс страхование, автостраховка онлайн, страховка оффлайн"/>
       <meta name="description" content="Заполните форму, чтобы передать необходимые данные страхователю для оформления страхового полиса." />
+      <meta property="og:image" content="https://insurance-basova.vercel.app/favicon.ico">
+      <meta property="og:image:width" content="512">
+      <meta property="og:image:height" content="512">
+      <meta name="twitter:image" content="https://insurance-basova.vercel.app/favicon.ico">
+      <meta name="twitter:card" content="summary_large_image">
       <title>Страхование автомобилей в Московской Славянке</title>
       <script
           type="application/ld+json"
