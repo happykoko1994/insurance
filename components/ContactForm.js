@@ -25,8 +25,11 @@ export default function InsuranceForm() {
 
   useEffect(() => {
     if (cooldown > 0) {
-      const timer = setTimeout(() => setCooldown(0), cooldown);
-      return () => clearTimeout(timer);
+      const interval = setInterval(() => {
+        setCooldown((prev) => (prev > 1000 ? prev - 1000 : 0));
+      }, 1000);
+      
+      return () => clearInterval(interval);
     }
   }, [cooldown]);
 

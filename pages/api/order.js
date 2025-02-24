@@ -7,9 +7,8 @@ import transporter from "../../lib/mailer";
 
 dotenv.config();
 
-const MAX_RECORDS = 30; // Максимальное количество заказов в базе
-
-const SECRET_KEY = process.env.ENCRYPTION_KEY; // 32-байтовый ключ
+const MAX_RECORDS = 30;
+const SECRET_KEY = process.env.ENCRYPTION_KEY;
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -17,33 +16,12 @@ export default async function handler(req, res) {
   }
 
   function encrypt(text) {
-    const key = Buffer.from(process.env.ENCRYPTION_KEY, "hex");
+    const key = Buffer.from(SECRET_KEY, "hex");
     const iv = crypto.randomBytes(16);
     const cipher = crypto.createCipheriv("aes-256-cbc", key, iv);
     let encrypted = cipher.update(text, "utf8", "hex");
     encrypted += cipher.final("hex");
     return iv.toString("hex") + ":" + encrypted;
-  }
-
-  function decrypt(encryptedText) {
-    try {
-      const [ivHex, encryptedData] = encryptedText.split(":");
-      const iv = Buffer.from(ivHex, "hex");
-
-      const decipher = crypto.createDecipheriv(
-        "aes-256-cbc",
-        Buffer.from(SECRET_KEY, "hex"),
-        iv
-      );
-
-      let decrypted = decipher.update(encryptedData, "hex", "utf8");
-      decrypted += decipher.final("utf8");
-
-      return decrypted;
-    } catch (error) {
-      console.error("❌ Ошибка при расшифровке:", error);
-      return null;
-    }
   }
 
   try {
@@ -52,20 +30,11 @@ export default async function handler(req, res) {
 
     console.log("📌 Данные перед обработкой:", data);
 
-    // Функция для форматирования строк (первая буква заглавная)
     const capitalize = (str) =>
       str ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() : str;
 
-    // Приведение данных в нужный формат
     data.region = capitalize(data.region);
     data.insurancePeriod = capitalize(data.insurancePeriod);
-
-    if (data.phone) {
-      data.phone = encrypt(String(data.phone).trim());
-    } else {
-      data.phone = "";
-    }
-    
 
     if (data.drivers && Array.isArray(data.drivers)) {
       data.drivers = data.drivers.map((driver) => ({
@@ -84,28 +53,29 @@ export default async function handler(req, res) {
       data.car.vin = data.car.vin.toUpperCase();
     }
 
+    // Отправляем email до шифрования
+    sendEmailNotification(data).catch(console.error);
+
+    // Шифруем только критичные данные перед сохранением в БД
+    if (data.phone) data.phone = encrypt(String(data.phone).trim());
+    if (data.car) data.car.vin = encrypt(data.car.vin);
+    if (data.drivers) {
+      data.drivers = data.drivers.map((driver) => ({
+        ...driver,
+        firstName: encrypt(driver.firstName),
+        lastName: encrypt(driver.lastName),
+        middleName: driver.middleName ? encrypt(driver.middleName) : "",
+      }));
+    }
 
     // Проверяем количество заказов
     const count = await Order.countDocuments();
     if (count >= MAX_RECORDS) {
-      const oldestOrder = await Order.findOne().sort({ createdAt: 1 });
+      const oldestOrder = await Order.findOneAndDelete().sort({ createdAt: 1 });
       if (oldestOrder) {
-        await Order.deleteOne({ _id: oldestOrder._id });
         console.log("🗑 Удалена старая запись:", oldestOrder._id);
       }
     }
-
-    data.drivers = data.drivers.map((driver) => ({
-      ...driver,
-      firstName: encrypt(driver.firstName),
-      lastName: encrypt(driver.lastName),
-      middleName: driver.middleName ? encrypt(driver.middleName) : "",
-      licenseSeries: driver.licenseSeries.toUpperCase(),
-      licenseNumber: driver.licenseNumber.toUpperCase(),
-    }));
-
-    data.car.vin = encrypt(data.car.vin);
-    console.log("📌 Данные после форматирования:", data);
 
     // Сохраняем новый заказ
     const order = new Order(data);
@@ -113,36 +83,15 @@ export default async function handler(req, res) {
 
     res.status(201).json({ message: "Заказ успешно отправлен" });
     console.log("✅ Заказ сохранён в базе");
-
-    // Отправляем email (асинхронно)
-    console.log("📩 Отправка email началась...");
-    const decryptedData = {
-      ...data,
-      phone: decrypt(data.phone),
-      drivers: data.drivers.map((driver) => ({
-        ...driver,
-        firstName: decrypt(driver.firstName) || driver.firstName,
-        lastName: decrypt(driver.lastName) || driver.lastName,
-        middleName: driver.middleName ? decrypt(driver.middleName) : "",
-      })),
-      car: {
-        ...data.car,
-        vin: decrypt(data.car.vin) || data.car.vin,
-      },
-    };
-
-    sendEmailNotification(decryptedData).catch(console.error);
   } catch (error) {
     console.error("❌ Ошибка при сохранении заказа:", error);
     res.status(400).json({ message: error.message });
   }
 }
 
-// 📩 Функция отправки email
 async function sendEmailNotification(data) {
   try {
     console.log("📩 Отправка email...");
-
     const info = await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_RECEIVER,
