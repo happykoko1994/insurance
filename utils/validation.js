@@ -37,7 +37,7 @@ export const schema = z.object({
 
   car: z.object({
     brand: z.string().min(2, "Минимум 2 символа").max(30, "Максимум 30 символов"),
-    model: z.string().min(2, "Минимум 2 символа").max(30, "Максимум 30 символов"),
+    model: z.string().min(1, "Минимум 1 символ").max(30, "Максимум 30 символов"),
     year: z.preprocess((val) => Number(val), z.number()
       .int("Должно быть целым числом")
       .min(1900, "Некорректный год")
